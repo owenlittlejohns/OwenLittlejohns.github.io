@@ -24,8 +24,8 @@ var svg = d3.select(divId)
     .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
 // Create tooltip and attach to the divId
-var tooltip = d3.select(divId)
-    .append('.pieChart')
+var tooltip = d3.select('.pieChart')
+    .append('div')
     .attr('class', 'pieChartTooltip')
     .attr('transform', 'translate(' + width / 2 + ',' + height / 2 +')');
 
