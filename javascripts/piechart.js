@@ -33,7 +33,7 @@ tooltip.append('div')
     .attr('class', 'tooltipKey')
     .attr('text-anchor', 'middle');
 
-tooptip.append('div')
+tooltip.append('div')
     .attr('class', 'tooltipValue')
     .attr('text-anchor', 'middle');
 
