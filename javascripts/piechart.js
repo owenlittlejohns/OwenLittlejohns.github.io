@@ -57,7 +57,7 @@ var labelArc = d3.svg.arc()
 // Start and end of the segments
 var pie = d3.layout.pie()
     .sort(null)
-    .value(function(d) {return d[value]; });
+    .value(function(d) {console.log(d); return d[value]; });
 
 // Append the segments
 var path = svg.selectAll('path')
