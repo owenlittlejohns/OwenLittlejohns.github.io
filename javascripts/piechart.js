@@ -27,7 +27,7 @@ var svg = d3.select(divId)
 var tooltip = d3.select('.pieChart')
     .append('div')
     .attr('class', 'pieChartTooltip');
-    //.attr('transform', 'translate(' + width / 2 + ',' + height / 2 +')');
+    .attr('transform', 'translate(' + width / 2 + ',' + height / 2 +')');
 
 tooltip.append('div')
     .attr('class', 'tooltipKey')
@@ -74,6 +74,9 @@ var path = svg.selectAll('path')
 	tooltip.select('.tooltipKey').html(d["name"]);
 	tooltip.select('tooltipValue').html(d["value"]);
 	tooltip.style('display', 'block');
+	tooltip.html(d)
+	    .style('left', d3.select('.pieChart').attr('cx') + 'px')
+	    .style('top', d3.select('.pieChart').attr('cy') + 'px');
     })
     .on('mouseout', function(d) {
 	d3.select(this).transition()
