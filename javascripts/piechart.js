@@ -57,7 +57,7 @@ var labelArc = d3.svg.arc()
 // Start and end of the segments
 var pie = d3.layout.pie()
     .sort(null)
-    .value(function(d) {console.log(d); return d[value]; });
+    .value(function(d) {return d["value"]; });
 
 // Append the segments
 var path = svg.selectAll('path')
@@ -71,8 +71,8 @@ var path = svg.selectAll('path')
 	    .duration(1000)
 	    .attr("d", arcOver);
 	
-	tooltip.select('.tooltipKey').html(d[name]);
-	tooltip.select('tooltipValue').html(d[value]);
+	tooltip.select('.tooltipKey').html(d["name"]);
+	tooltip.select('tooltipValue').html(d["value"]);
 	tooltip.style('display', 'block');
     })
     .on('mouseout', function(d) {
