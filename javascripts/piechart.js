@@ -27,17 +27,8 @@ var svg = d3.select(divId)
 var tooltip = d3.select(divId)
     .append('div')
     .attr('class', 'pieChartTooltip')
-    .attr('position', 'absolute')
-    .attr('z-index', '10')
+    .attr('position', 'relative')
     .style('display', 'none');
-
-tooltip.append('div')
-    .attr('class', 'tooltipKey')
-    .attr('text-anchor', 'middle');
-
-tooltip.append('div')
-    .attr('class', 'tooltipValue')
-    .attr('text-anchor', 'middle');
 
 // Set the colour scheme using a d3 default:
 var colour = d3.scale.category20c();
@@ -69,27 +60,23 @@ var path = svg.selectAll('path')
     .attr('d', arc)
     .attr('fill', function(d, i) {	return colour(i); } )
     .on('mouseover', function(d) {
+	// Make segment expand on hover
 	d3.select(this).transition()
 	    .duration(1000)
 	    .attr("d", arcOver);
-	
-	//tooltip.style('opacity', '1');
-	tooltip.style('display', 'inline');
     })
     .on('mousemove', function(d) {
-
-	var mouseCoords = d3.mouse(tooltip.node().parentElement);
-	tooltip.select('.tooltipKey').text(d.data['name']);
-	tooltip.select('tooltipValue').text(d.data['value']);
-	tooltip.attr('transform', 'translate(' + (mouseCoords[0] - 10) 
-		     + ',' + (mouseCoords[1] - 10) + ')');
-	//tooltip.style('top', (event.pageY - 10) + 'px');
-	//tooltip.style('left', (event.pageX + 10) + 'px');
+	// Show tooltip
+	var mouse = d3.mouse(svg.node()).map(function(d) {
+	    return parseInt(d);
+	});
+	tooltip.attr('style', 'left: '+(mouse[0]) + 'px; top: ' + (mouse[1] - height) + 'px;');
+	tooltip.html(d.data['name'] + ': ' + d.data['value']);
     })
     .on('mouseout', function(d) {
+	// Make segment shrink again and hide tooltip
 	d3.select(this).transition()
 	    .duration(1000)
 	    .attr('d', arc);
-	//tooltip.style('opacity', '0');
 	tooltip.style('display', 'none');
     });
