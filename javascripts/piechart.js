@@ -6,8 +6,8 @@
  Owen Littlejohns 2016 April 26th
  */
 
-var height    = 100;
-var width     = 100;
+var height    = 125;
+var width     = 125;
 var divId     = "#pieChartExample"
 var inputData = [{"name": "Name 1", "value": 10}, {"name": "Name 2", "value": 7}, {"name": "Name 3", "value": 5}, {"name": "Name 4", "value": 2}, {"name": "Name 5", "value": 1}, {"name": "Name 6", "value": 1}]
 
@@ -24,10 +24,12 @@ var svg = d3.select(divId)
     .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
 // Create tooltip and attach to the divId
-var tooltip = d3.select('.pieChart')
+var tooltip = d3.select(divId)
     .append('div')
     .attr('class', 'pieChartTooltip')
-    .attr('transform', 'translate(' + width / 2 + ',' + height / 2 +')');
+    .attr('position', 'absolute')
+    .attr('z-index', '10')
+    .style('display', 'none');
 
 tooltip.append('div')
     .attr('class', 'tooltipKey')
@@ -71,16 +73,23 @@ var path = svg.selectAll('path')
 	    .duration(1000)
 	    .attr("d", arcOver);
 	
-	tooltip.select('.tooltipKey').html(d["name"]);
-	tooltip.select('tooltipValue').html(d["value"]);
-	tooltip.style('display', 'block');
-	tooltip.html(d)
-	    .style('left', d3.select('.pieChart').attr('cx') + 'px')
-	    .style('top', d3.select('.pieChart').attr('cy') + 'px');
+	//tooltip.style('opacity', '1');
+	tooltip.style('display', 'inline');
+    })
+    .on('mousemove', function(d) {
+
+	var mouseCoords = d3.mouse(tooltip.node().parentElement);
+	tooltip.select('.tooltipKey').text(d.data['name']);
+	tooltip.select('tooltipValue').text(d.data['value']);
+	tooltip.attr('transform', 'translate(' + (mouseCoords[0] - 10) 
+		     + ',' + (mouseCoords[1] - 10) + ')');
+	//tooltip.style('top', (event.pageY - 10) + 'px');
+	//tooltip.style('left', (event.pageX + 10) + 'px');
     })
     .on('mouseout', function(d) {
 	d3.select(this).transition()
 	    .duration(1000)
 	    .attr('d', arc);
+	//tooltip.style('opacity', '0');
 	tooltip.style('display', 'none');
     });
