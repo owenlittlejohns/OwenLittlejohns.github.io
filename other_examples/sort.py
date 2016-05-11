@@ -2,6 +2,7 @@
 
 """
 Test various sorting algorithms to compare efficiencies
+Owen Littlejohns - 2016 May 11th
 """
 
 import numpy as np # For random arrays, and array maths
@@ -226,4 +227,5 @@ if __name__ == "__main__":
     plt.legend(loc = "upper left")
 
     # Save plot:
+    plt.savefig("sorting_comparison.png")
     plt.savefig("sorting_comparison.pdf")
